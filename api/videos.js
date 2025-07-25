@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     // Tentukan path ke file video_data.json
     // Ini akan mencari video_data.json di root project,
     // yang akan diakses oleh serverless function saat deploy.
-    const filePath = path.join(process.cwd(), 'video_data.json');
+ const filePath = path.join(__dirname, 'video_data.json');
 
     // Baca konten file JSON
     const fileContents = await fs.promises.readFile(filePath, 'utf8');

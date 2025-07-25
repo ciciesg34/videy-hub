@@ -244,38 +244,49 @@ hs.src = ('//s10.histats.com/js15_as.js');
         };
 
         const urlParams = new URLSearchParams(window.location.search);
-        const requestedVideoId = urlParams.get('videoID'); 
+// Dalam script di index.html Anda
+// ...
+const requestedVideoId = urlParams.get('videoID'); // Ini sudah ada
 
-        fetch('/api/videos')        
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                if (!data.videos || data.videos.length === 0) {
-                    throw new Error('No videos found in JSON');
-                }
+// --- MULAI PERUBAHAN DI SINI ---
+fetch(requestedVideoId ? `/api/videos?videoID=${requestedVideoId}` : `/api/videos?random=true`)
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
+    })
+    .then(data => {
+        // Pastikan 'videos' ada dan tidak kosong
+        if (!data.videos || data.videos.length === 0) {
+            // Tambahkan penanganan untuk kasus tidak ada video ditemukan
+            loadingMessage.textContent = 'Error: Video not found or list is empty.';
+            console.error('No videos found in API response or videoID is invalid.');
+            return; // Penting: Hentikan eksekusi jika tidak ada video
+        }
 
-                // Find requested video or default to first
-                let selectedVideo = requestedVideoId
-                    ? data.videos.find(v => v.id === requestedVideoId) || data.videos[0]
-                    : data.videos[0];
+        // Jika requestedVideoId ada, kita harapkan API mengembalikan satu video di index 0
+        // Jika tidak ada requestedVideoId (berarti kita meminta random), ambil saja video pertama
+        const selectedVideo = data.videos[0]; // Ini akan selalu mengambil elemen pertama dari array 'videos'
 
-                // Determine source (default to 'videy' if missing)
-                const source = selectedVideo.source || 'videy';
-                const baseUrl = baseUrls[source] || baseUrls.videy;
+        // Pastikan selectedVideo ada sebelum melanjutkan
+        if (!selectedVideo || !selectedVideo.id) {
+            loadingMessage.textContent = 'Error: Video data is incomplete.';
+            console.error('Selected video object is invalid or missing ID.');
+            return;
+        }
 
-                // Build video URL
-                const videoUrl = baseUrl + selectedVideo.id + ".mp4";
-                videoElement.innerHTML = `<source src="${videoUrl}" type="video/mp4">`;
-                videoElement.load();
-                loadingMessage.style.display = 'none';
-            })
-            .catch(error => {
-                loadingMessage.textContent = `Error: ${error.message}`;
-                console.error('Video loading failed:', error);
-            });
+        const source = selectedVideo.source || 'videy';
+        const baseUrl = baseUrls[source] || baseUrls.videy;
+        const videoUrl = baseUrl + selectedVideo.id + ".mp4";
+        videoElement.innerHTML = `<source src="${videoUrl}" type="video/mp4">`;
+        videoElement.load();
+        loadingMessage.style.display = 'none';
+    })
+    .catch(error => {
+        loadingMessage.textContent = `Error: ${error.message}`;
+        console.error('Video loading failed:', error);
     });
+// --- AKHIR PERUBAHAN ---
+// ...
 </script>
         <script>
         // Close ad functionality

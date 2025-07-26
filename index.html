@@ -138,6 +138,65 @@
             font-size: 0.9rem;
         }
 
+        /* --- Adblock Detection Styles --- */
+        #ad-test-element {
+            width: 1px;
+            height: 1px;
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            /* Nama kelas ini sering ditarget Adblocker */
+            background-image: url('/images/ad-pixel.gif'); 
+            z-index: -1; /* Pastikan ini tidak mengganggu layout */
+            opacity: 0; /* Pastikan tidak terlihat */
+            pointer-events: none; /* Pastikan tidak bisa diklik */
+        }
+
+        #adblock-alert-overlay {
+            display: none; /* Defaultnya tersembunyi */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-direction: column;
+        }
+
+        #adblock-alert-overlay h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        #adblock-alert-overlay p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        #adblock-alert-overlay button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        #adblock-alert-overlay button:hover {
+            background-color: #0056b3;
+        }
+        /* --- End Adblock Detection Styles --- */
+
         @media (max-width: 768px) {
             .container {
                 width: 98%;
@@ -149,48 +208,55 @@
             .site-title {
                 font-size: 1.4rem;
             }
-        /* Container for fixed ad */
-        #mobileAdContainer {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 320px;
-            height: 50px;
-            background: #f0f0f0;
-            border: 1px solid #ccc;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+            /* Container for fixed ad */
+            #mobileAdContainer {
+                position: fixed;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 320px;
+                height: 50px;
+                background: #f0f0f0;
+                border: 1px solid #ccc;
+                z-index: 1000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        /* Optional close button */
-        #closeAdBtn {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 20px;
-            height: 20px;
-            background: #333;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            cursor: pointer;
-        }
+            /* Optional close button */
+            #closeAdBtn {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                width: 20px;
+                height: 20px;
+                background: #333;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 12px;
+                cursor: pointer;
+            }
 
-        /* Ensure content doesn't hide behind ad */
-        body {
-            margin-bottom: 60px; /* Extra space at bottom */
-        }
+            /* Ensure content doesn't hide behind ad */
+            body {
+                margin-bottom: 60px; /* Extra space at bottom */
+            }
         }
     </style>
-
 </head>
 <body>
+    <div id="ad-test-element" class="ad ad-banner-2x1-responsive"></div>
+
+    <div id="adblock-alert-overlay">
+        <h2>Adblocker Terdeteksi!</h2>
+        <p>Kami mendeteksi Anda menggunakan Adblocker. Untuk dapat menikmati konten kami sepenuhnya dan mendukung situs ini, mohon nonaktifkan Adblocker Anda atau tambahkan situs kami ke daftar putih Anda.</p>
+        <button onclick="location.reload()">Saya Sudah Nonaktifkan Adblocker</button>
+    </div>
+
     <header>
         <div class="header-content">
             <h1 class="site-title">Lato Atea</h1>
@@ -214,100 +280,129 @@
         </div>
 
         <div class="histats-container">            
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4962953,4,1037,150,25,00011111']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4962953&101" alt="" border="0"></a></noscript>
+            <script type="text/javascript">
+                var _Hasync= _Hasync|| [];
+                _Hasync.push(['Histats.start', '1,4962953,4,1037,150,25,00011111']);
+                _Hasync.push(['Histats.fasi', '1']);
+                _Hasync.push(['Histats.track_hits', '']);
+                (function() {
+                    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+                    hs.src = ('//s10.histats.com/js15_as.js');
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+                })();
+            </script>
+            <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4962953&101" alt="" border="0"></a></noscript>
         </div>
     </div>
-<!-- Ad Container -->
+
     <div id="mobileAdContainer">
         <div id="closeAdBtn">✕</div>
         <ins style="width: 320px;height:50px" data-width="320" data-height="50" class="secbaba9fa0" data-domain="//data741.click" data-affquery="/704c66efaff5d99239cf/ecbaba9fa0/?placementName=default"><script src="//data741.click/js/responsive.js" async></script></ins>
     </div>
 
-         <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const videoElement = document.getElementById('mainVideo');
-    const loadingMessage = document.getElementById('loadingMessage');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoElement = document.getElementById('mainVideo');
+            const loadingMessage = document.getElementById('loadingMessage');
 
-    // 12345
-    const baseUrls = {
-        videy: "https://cdn.videy.co/",
-        quax: "https://qu.ax/"
-    };
+            // 12345
+            const baseUrls = {
+                videy: "https://cdn.videy.co/",
+                quax: "https://qu.ax/"
+            };
 
-    // 12345
-    const urlParams = new URLSearchParams(window.location.search);
-    const requestedVideoId = urlParams.get('videoID');
+            // 12345
+            const urlParams = new URLSearchParams(window.location.search);
+            const requestedVideoId = urlParams.get('videoID');
 
-    // 12345
-    fetch(requestedVideoId ? `/api/videos?videoID=${requestedVideoId}` : `/api/videos?random=true`)
-        .then(response => {
-            if (!response.ok) {
-                // 12345
-                console.error(`HTTP error! status: ${response.status} from ${response.url}`);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (!data.videos || data.videos.length === 0) {
-                loadingMessage.textContent = 'Error: Video not found or list is empty.';
-                console.error('No videos found in API response or videoID is invalid.');
-                return;
-            }
+            // 12345
+            fetch(requestedVideoId ? `/api/videos?videoID=${requestedVideoId}` : `/api/videos?random=true`)
+                .then(response => {
+                    if (!response.ok) {
+                        // 12345
+                        console.error(`HTTP error! status: ${response.status} from ${response.url}`);
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.videos || data.videos.length === 0) {
+                        loadingMessage.textContent = 'Error: Video not found or list is empty.';
+                        console.error('No videos found in API response or videoID is invalid.');
+                        return;
+                    }
 
-            const selectedVideo = data.videos[0];
+                    const selectedVideo = data.videos[0];
 
-            if (!selectedVideo || !selectedVideo.id) {
-                loadingMessage.textContent = 'Error: Video data is incomplete.';
-                console.error('Selected video object is invalid or missing ID.');
-                return;
-            }
+                    if (!selectedVideo || !selectedVideo.id) {
+                        loadingMessage.textContent = 'Error: Video data is incomplete.';
+                        console.error('Selected video object is invalid or missing ID.');
+                        return;
+                    }
 
-            const source = selectedVideo.source || 'videy';
-            const baseUrl = baseUrls[source] || baseUrls.videy;
-            const videoUrl = baseUrl + selectedVideo.id + ".mp4";
-            videoElement.innerHTML = `<source src="${videoUrl}" type="video/mp4">`;
-            videoElement.load();
-            loadingMessage.style.display = 'none';
-        })
-        .catch(error => {
-            loadingMessage.textContent = `Error: ${error.message}`;
-            console.error('Video loading failed:', error);
+                    const source = selectedVideo.source || 'videy';
+                    const baseUrl = baseUrls[source] || baseUrls.videy;
+                    const videoUrl = baseUrl + selectedVideo.id + ".mp4";
+                    videoElement.innerHTML = `<source src="${videoUrl}" type="video/mp4">`;
+                    videoElement.load();
+                    loadingMessage.style.display = 'none';
+                })
+                .catch(error => {
+                    loadingMessage.textContent = `Error: ${error.message}`;
+                    console.error('Video loading failed:', error);
+                });
         });
-}); // 12345   
-</script>
-        <script>
-        // Close ad functionality
-        document.getElementById('closeAdBtn').addEventListener('click', function() {
-            const adContainer = document.getElementById('mobileAdContainer');
-            adContainer.style.display = 'none';
-            document.body.style.marginBottom = '0';
-        });
+    </script>
+    <script>
+        // --- Adblock Detection Script ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const adTestElement = document.getElementById('ad-test-element');
+            const adblockOverlay = document.getElementById('adblock-alert-overlay');
 
-        // Optional: Hide ad on larger screens
-        function checkScreenSize() {
-            const adContainer = document.getElementById('mobileAdContainer');
-            if (window.innerWidth > 768) { // Hide on screens wider than 768px
-                adContainer.style.display = 'none';
-                document.body.style.marginBottom = '0';
-            } else {
-                adContainer.style.display = 'flex';
-                document.body.style.marginBottom = '60px';
+            // Timeout untuk memastikan Adblocker punya waktu untuk memproses elemen
+            setTimeout(() => {
+                if (adTestElement.offsetHeight === 0 || adTestElement.offsetWidth === 0 || 
+                    window.getComputedStyle(adTestElement).getPropertyValue('display') === 'none' ||
+                    window.getComputedStyle(adTestElement).getPropertyValue('visibility') === 'hidden') {
+                    
+                    adblockOverlay.style.display = 'flex'; // Tampilkan overlay Adblock
+                    document.body.style.overflow = 'hidden'; // Nonaktifkan scroll halaman
+                    console.log("Adblocker terdeteksi!");
+                } else {
+                    adblockOverlay.style.display = 'none'; // Pastikan overlay tersembunyi jika tidak ada Adblock
+                    document.body.style.overflow = ''; // Aktifkan scroll
+                    console.log("Adblocker tidak terdeteksi.");
+                }
+            }, 100); // Beri sedikit waktu (misal 100ms)
+
+            // Close ad functionality
+            const closeAdBtn = document.getElementById('closeAdBtn');
+            if (closeAdBtn) {
+                closeAdBtn.addEventListener('click', function() {
+                    const mobileAdContainer = document.getElementById('mobileAdContainer');
+                    mobileAdContainer.style.display = 'none';
+                    document.body.style.marginBottom = '0';
+                });
             }
-        }
 
-        // Initial check and window resize listener
-        window.addEventListener('load', checkScreenSize);
-        window.addEventListener('resize', checkScreenSize);
+            // Optional: Hide ad on larger screens
+            function checkScreenSize() {
+                const mobileAdContainer = document.getElementById('mobileAdContainer');
+                if (mobileAdContainer) {
+                    if (window.innerWidth > 768) { // Hide on screens wider than 768px
+                        mobileAdContainer.style.display = 'none';
+                        document.body.style.marginBottom = '0';
+                    } else {
+                        mobileAdContainer.style.display = 'flex';
+                        document.body.style.marginBottom = '60px';
+                    }
+                }
+            }
+
+            // Initial check and window resize listener
+            window.addEventListener('load', checkScreenSize);
+            window.addEventListener('resize', checkScreenSize);
+        });
     </script>
 </body>
 </html>

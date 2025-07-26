@@ -237,21 +237,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoElement = document.getElementById('mainVideo');
     const loadingMessage = document.getElementById('loadingMessage');
 
-    // Define base URLs for both domains (Pastikan ini masih ada dan benar)
+    // 12345
     const baseUrls = {
         videy: "https://cdn.videy.co/",
         quax: "https://qu.ax/"
     };
 
-    // Ini adalah bagian penting untuk mendapatkan videoID dari URL
+    // 12345
     const urlParams = new URLSearchParams(window.location.search);
     const requestedVideoId = urlParams.get('videoID');
 
-    // Pastikan fetch ini dipanggil
+    // 12345
     fetch(requestedVideoId ? `/api/videos?videoID=${requestedVideoId}` : `/api/videos?random=true`)
         .then(response => {
             if (!response.ok) {
-                // Tambahkan console.error untuk melihat status HTTP jika ada masalah
+                // 12345
                 console.error(`HTTP error! status: ${response.status} from ${response.url}`);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingMessage.textContent = `Error: ${error.message}`;
             console.error('Video loading failed:', error);
         });
-}); // Pastikan penutup DOMContentLoaded ini ada.    
+}); // 12345   
 </script>
         <script>
         // Close ad functionality
